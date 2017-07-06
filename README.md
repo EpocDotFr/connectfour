@@ -18,46 +18,21 @@ The [Connect Four](https://en.wikipedia.org/wiki/Connect_Four) game, implemented
     - (WIP) LAN game
     - (WIP) Online game
 
-## Executables download
-
-Go [here](https://github.com/EpocDotFr/connectfour/releases) to find the latest ones.
-
-The following executables are currently available:
-
-  - Windows (64 bits). Tested on Windows 7 / 10
-  - Mac OS (64 bits). Tested on Mac OS Sierra
-
 ## Prerequisites
-
-**If you are a player**:
-
-  - Nothing.
-
-**If you are a developer:**
 
   - Python 3.5
 
 ## Installation
 
-**If you are a player**:
-
-  - Nothing to install.
-
-**If you are a developer:**
-
 Clone this repo, and then the usual `pip install -r requirements.txt`.
 
 ## Usage
 
-**If you are a player**:
-
-Just run the executable.
-
-**If you are a developer:**
-
 ```
 python run.py [--muted] [--dev]
 ```
+
+`--muted` disable sounds. `--dev` enable WIP features (like network games).
 
 ## Controls
 
