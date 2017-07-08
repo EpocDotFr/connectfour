@@ -32,7 +32,9 @@ Clone this repo, and then the usual `pip install -r requirements.txt`.
 python run.py [--muted] [--dev]
 ```
 
-`--muted` disable sounds. `--dev` enable WIP features (like network games).
+`--muted` disable sounds.
+
+`--dev` enable WIP features (like network games).
 
 ## Controls
 
@@ -48,11 +50,11 @@ works here, so you'll have to jump yourself in the source code. Start with the e
 
 Beside the game itself, I use [PyInstaller](http://www.pyinstaller.org/) to generate the executables. It packs up all the
 game and its assets in a single executable file so players just have to run it with nothing to install. This task is
-performed by the `build_*` scripts to be ran in the corresponding OS.
+performed by the `build_*` scripts to be run in the corresponding OS.
 
 Network gaming is done by [WebSockets](https://en.wikipedia.org/wiki/WebSocket) using [Autobahn](http://autobahn.ws/python/).
 A [master server](https://github.com/EpocDotFr/connectfour-master-server) (with the help of a [REST](https://en.wikipedia.org/wiki/Representational_state_transfer)
-API) is used to centralize all Connect Four games.
+API) is used to centralize all the online Connect Four games.
 
 ## Credits
 
