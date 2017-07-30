@@ -22,7 +22,7 @@ RESOURCES_ROOT = os.path.join(sys._MEIPASS, 'resources') if getattr(sys, 'frozen
 
 CONFIG_FILE = 'connectfour.ini'
 DEFAULT_CONFIG = {
-    'master_server_endpoint': 'https://cfg.epoc.fr/api/',
+    'master_server_endpoint': 'https://cfms.epoc.fr/api/',
     'sounds_volume': 0.1,
     'music_volume': 0.2
 }
