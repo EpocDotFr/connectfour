@@ -29,10 +29,8 @@ Clone this repo, and then the usual `pip install -r requirements.txt`.
 ## Usage
 
 ```
-python run.py [--muted] [--dev]
+python run.py [--dev]
 ```
-
-`--muted` disable sounds.
 
 `--dev` enable WIP features (like network games).
 

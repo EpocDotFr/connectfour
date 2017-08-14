@@ -20,6 +20,9 @@ def load_image(filename):
 
 
 def load_sound(filename, volume=0.5):
+    if volume == 0:
+        return
+
     path = _get_resource_path('sounds', filename)
 
     sound = pygame.mixer.Sound(file=path)
@@ -29,6 +32,9 @@ def load_sound(filename, volume=0.5):
 
 
 def load_music(filename, play=True, volume=0.5):
+    if volume == 0:
+        return
+
     path = _get_resource_path('musics', filename)
 
     pygame.mixer.music.load(path)

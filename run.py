@@ -7,9 +7,8 @@ import click
 
 
 @click.command()
-@click.option('--muted', is_flag=True, default=False, help='No sounds')
 @click.option('--dev', is_flag=True, default=False, help='Dev mode')
-def run(muted, dev):
+def run(dev):
     os.environ['SDL_VIDEO_CENTERED'] = '1' # This makes the window centered on the screen
 
     logging.basicConfig(
@@ -30,10 +29,7 @@ def run(muted, dev):
     if dev:
         logging.info('Dev mode enabled')
 
-    if muted:
-        logging.info('Running with no sounds')
-
-    app = App(dev_mode=dev, no_sounds=muted)
+    app = App(dev_mode=dev)
 
     logging.info('Running game')
 

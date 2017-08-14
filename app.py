@@ -9,11 +9,10 @@ import os
 
 
 class App:
-    def __init__(self, dev_mode=False, no_sounds=False):
+    def __init__(self, dev_mode=False):
         logging.info('Initializing app')
 
         self.dev_mode = dev_mode
-        self.no_sounds = no_sounds
 
         self.clock = pygame.time.Clock()
         self.window = pygame.display.set_mode(settings.WINDOW_SIZE, pygame.DOUBLEBUF)
