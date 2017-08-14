@@ -36,9 +36,9 @@ class Lobby:
             self.get_online_games()
             pygame.time.set_timer(settings.EVENTS.GET_ONLINE_GAMES.value, 5000)
         elif self.lobby_type == settings.LOBBY_STATES.HOST_LAN_GAME:
-            self.lan_announcer = networking.lan.Announcer()
+            self.lan_announcer = networking.lan.Announcer(game_name=self.app.config.get('connectfour', 'game_name'))
 
-            networking.engine.Engine(settings.NETWORK_ENGINE_MODE.HOST, socket.gethostbyname(socket.gethostname()))
+            networking.engine.Engine(settings.NETWORK_ENGINE_MODE.HOST, '')
         elif self.lobby_type == settings.LOBBY_STATES.JOIN_LAN_GAME:
             self.lan_discoverer = networking.lan.Discoverer(self, self.games_list)
             pygame.time.set_timer(settings.EVENTS.CLEAN_LAN_GAMES.value, 3000)

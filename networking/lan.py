@@ -33,12 +33,13 @@ class LanGame(StoppableThread):
 
 
 class Announcer(LanGame):
-    def __init__(self):
+    def __init__(self, game_name=None):
         logging.info('Running Announcer thread')
 
         super(Announcer, self).__init__()
 
         self.name = 'LanAnnouncer'
+        self.game_name = game_name
 
     def run(self):
         self.socket.bind(('', 0))
@@ -46,7 +47,7 @@ class Announcer(LanGame):
 
         data = [
             settings.LAN_IDENTIFIER, # Magic ID to recognize a Connect Four LAN game announcement
-            socket.gethostname() # Name of the game (currently the hostname of this announcer)
+            socket.gethostname() if not self.game_name else self.game_name # Name of the game (the hostname if none provided)
         ]
 
         data = str.encode(''.join(data))
@@ -57,6 +58,8 @@ class Announcer(LanGame):
 
             self.socket.sendto(data, ('<broadcast>', settings.LAN_PORT))
             time.sleep(5)
+
+        self.socket.close()
 
 
 class Discoverer(LanGame):
@@ -78,7 +81,7 @@ class Discoverer(LanGame):
                 break
 
             try:
-                data, host_ip = self.socket.recvfrom(512)
+                data, host = self.socket.recvfrom(512)
 
                 data = data.decode()
             except:
@@ -92,9 +95,11 @@ class Discoverer(LanGame):
 
                 # We don't care if this host already exists in the games list. Erase existing so this will always update
                 # old values like the game name which can change.
-                self.games_list[host_ip] = {
+                self.games_list[host[0]] = {
                     'name': game_name,
                     'last_ping_at': time.time()
                 }
 
                 self.lobby.update_games_list_gui()
+
+        self.socket.close()
