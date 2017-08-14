@@ -1,4 +1,4 @@
-from autobahn.asyncio.websocket import *
+from autobahn.asyncio.websocket import WebSocketServerFactory, WebSocketServerProtocol, WebSocketClientFactory, WebSocketClientProtocol
 import json
 import asyncio
 import logging
@@ -62,17 +62,17 @@ class ConnectFourServerProtocol(WebSocketServerProtocol):
         logging.info('WebSocket connection open')
 
     def onConnect(self, request):
-        logging.info('Client connected: {}'.format(request.peer))
+        logging.info('New client: {}'.format(request.peer))
 
     def onClose(self, wasClean, code, reason):
         logging.info('Client quits: {}'.format(reason))
 
-    def onMessage(self, payload, isBinary):
+    def onMessage(self, payload, isBinary=False):
         payload = json.loads(payload.decode('utf8'))
 
         print(payload)
 
-    def sendMessage(self, payload, isBinary):
+    def sendMessage(self, payload, isBinary=False):
         payload = json.dumps(payload, ensure_ascii=False).encode('utf8')
 
         super(WebSocketServerProtocol, self).sendMessage(payload, isBinary)
@@ -83,16 +83,16 @@ class ConnectFourClientProtocol(WebSocketClientProtocol):
         logging.info('WebSocket connection open')
 
     def onConnect(self, request):
-        logging.info('Connected to server: {}'.format(request.peer))
+        logging.info('Connected to host: {}'.format(request.peer))
 
-        self.sendMessage({'coucou': True}, False)
+        self.sendMessage({'coucou': True})
 
-    def onMessage(self, payload, isBinary):
+    def onMessage(self, payload, isBinary=False):
         payload = json.loads(payload.decode('utf8'))
 
         print(payload)
 
-    def sendMessage(self, payload, isBinary):
+    def sendMessage(self, payload, isBinary=False):
         payload = json.dumps(payload, ensure_ascii=False).encode('utf8')
 
         super(WebSocketClientProtocol, self).sendMessage(payload, isBinary)
