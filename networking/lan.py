@@ -3,7 +3,6 @@ import socket
 import threading
 import settings
 import logging
-import json
 
 
 class StoppableThread(threading.Thread):
@@ -45,16 +44,12 @@ class Announcer(LanGame):
         self.socket.bind(('', 0))
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-        hostname = socket.gethostname()
-
         data = [
-            socket.gethostbyname(hostname), # IP of this announcer
-            hostname # Name of the game (currently the hostname of this announcer)
+            settings.LAN_IDENTIFIER, # Magic ID to recognize a Connect Four LAN game announcement
+            socket.gethostname() # Name of the game (currently the hostname of this announcer)
         ]
 
-        # settings.LAN_IDENTIFIER is the magic ID to recognize a Connect Four LAN game announcement
-
-        data = str.encode(settings.LAN_IDENTIFIER + json.dumps(data))
+        data = str.encode(''.join(data))
 
         while True:
             if self.stopped():
@@ -83,7 +78,9 @@ class Discoverer(LanGame):
                 break
 
             try:
-                data = self.socket.recv(512).decode()
+                data, host_ip = self.socket.recvfrom(512)
+
+                data = data.decode()
             except:
                 continue
 
@@ -91,14 +88,7 @@ class Discoverer(LanGame):
                 if not data.startswith(settings.LAN_IDENTIFIER):
                     continue
 
-                data = data.replace(settings.LAN_IDENTIFIER, '')
-
-                try:
-                    data = json.loads(data)
-                except:
-                    continue
-
-                host_ip, game_name = data
+                game_name = data.replace(settings.LAN_IDENTIFIER, '')
 
                 # We don't care if this host already exists in the games list. Erase existing so this will always update
                 # old values like the game name which can change.
