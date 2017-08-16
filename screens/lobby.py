@@ -37,10 +37,13 @@ class Lobby:
             pygame.time.set_timer(settings.EVENTS.GET_ONLINE_GAMES.value, 5000)
         elif self.lobby_type == settings.LOBBY_STATES.HOST_LAN_GAME:
             self.lan_announcer = networking.lan.Announcer(game_name=self.app.config.get('connectfour', 'game_name'))
+            self.lan_announcer.start()
 
             networking.engine.Engine(settings.NETWORK_ENGINE_MODE.HOST, '')
         elif self.lobby_type == settings.LOBBY_STATES.JOIN_LAN_GAME:
             self.lan_discoverer = networking.lan.Discoverer(self, self.games_list)
+            self.lan_discoverer.start()
+
             pygame.time.set_timer(settings.EVENTS.CLEAN_LAN_GAMES.value, 3000)
 
     def on_server_click(self, widget):

@@ -5,31 +5,20 @@ import settings
 import logging
 
 
-class StoppableThread(threading.Thread):
-    def __init__(self):
-        super(StoppableThread, self).__init__()
-
-        self._stop = threading.Event()
-
-    def stop(self):
-        self._stop.set()
-
-    def stopped(self):
-        return self._stop.isSet()
-
-
-class LanGame(StoppableThread):
+class LanGame(threading.Thread):
     def __init__(self):
         super(LanGame, self).__init__()
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
         self.daemon = True
-        self.start()
+        self._stop = threading.Event()
 
     def stop(self):
         self.socket.close()
-        super(LanGame, self).stop()
+        self._stop.set()
+
+    def stopped(self):
+        return self._stop.isSet()
 
 
 class Announcer(LanGame):
@@ -66,14 +55,14 @@ class Discoverer(LanGame):
     def __init__(self, lobby, games_list):
         logging.info('Running Discoverer thread')
 
-        self.lobby = lobby
-        self.games_list = games_list
-
         super(Discoverer, self).__init__()
 
+        self.lobby = lobby
+        self.games_list = games_list
         self.name = 'LanDiscoverer'
 
     def run(self):
+        self.socket.settimeout(5.0)
         self.socket.bind(('', settings.LAN_PORT))
 
         while True:
