@@ -47,6 +47,9 @@ class Lobby:
             pygame.time.set_timer(settings.EVENTS.CLEAN_LAN_GAMES.value, 3000)
 
     def on_server_click(self, widget):
+        self.lan_discoverer.stop()
+        del self.lan_discoverer
+
         networking.engine.Engine(settings.NETWORK_ENGINE_MODE.JOIN, widget.data['ip'])
 
     def update_games_list_gui(self):
@@ -135,10 +138,10 @@ class Lobby:
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 if self.lobby_type == settings.LOBBY_STATES.HOST_ONLINE_GAME:
                     self.delete_online_game()
-                elif self.lobby_type == settings.LOBBY_STATES.HOST_LAN_GAME:
+                elif self.lobby_type == settings.LOBBY_STATES.HOST_LAN_GAME and self.lan_announcer:
                     self.lan_announcer.stop()
                     del self.lan_announcer
-                elif self.lobby_type == settings.LOBBY_STATES.JOIN_LAN_GAME:
+                elif self.lobby_type == settings.LOBBY_STATES.JOIN_LAN_GAME and self.lan_discoverer:
                     self.lan_discoverer.stop()
                     del self.lan_discoverer
 
