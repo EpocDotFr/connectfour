@@ -1,5 +1,5 @@
 # Shell script to build the Connect Four Mac OS executable.
-# The resulting "connectfour.app" executable and "connectfour" script will be available in the "dist" directory.
+# The resulting "connectfour_mac.app" executable and "connectfour_mac" script will be available in the "dist" directory.
 
 pyinstaller \
     --clean --noconfirm --onefile --windowed \
