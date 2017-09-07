@@ -9,7 +9,8 @@ import click
 @click.command()
 @click.option('--dev', is_flag=True, default=False, help='Dev mode')
 def run(dev):
-    os.environ['SDL_VIDEO_CENTERED'] = '1' # This makes the window centered on the screen
+    if 'SDL_VIDEO_WINDOW_POS' not in os.environ:
+        os.environ['SDL_VIDEO_CENTERED'] = '1' # This makes the window centered on the screen
 
     logging.basicConfig(
         format='%(asctime)s - %(levelname)s - %(message)s',
