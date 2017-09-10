@@ -13,6 +13,7 @@ The [Connect Four](https://en.wikipedia.org/wiki/Connect_Four) game, implemented
   - Chips that made the player win are highlighted
   - Sound effects!
   - Musics!
+  - Player's score
   - Two players, either:
     - On the same computer
     - (WIP) LAN game
@@ -34,7 +35,7 @@ python run.py [--dev]
 
 `--dev` enable WIP features (like network games).
 
-## Controls
+### Controls
 
   - <kbd>ESC</kbd> quits to the menu or close the game when already on the menu
   - <kbd>←</kbd> and <kbd>→</kbd> moves the chip respectively to the left and to the right
