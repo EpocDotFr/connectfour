@@ -21,7 +21,7 @@ The [Connect Four](https://en.wikipedia.org/wiki/Connect_Four) game, implemented
 
 ## Prerequisites
 
-  - Python 3.5
+Python 3. May eventually works with Python 2 (not tested).
 
 ## Installation
 
